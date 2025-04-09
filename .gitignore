@@ -1,0 +1,4 @@
+# Beispiel-Inhalt für MERN:
+node_modules/
+.env
+.DS_Store
