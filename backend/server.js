@@ -1,28 +1,15 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
+import productRoutes from './routes/product.route.js';
 
 dotenv.config();
 
 const app = express();
 
-app.post('/products', async (req, res) => {
-    const product = req.body; // user will send product data in the request body
+app.use(express.json()); // Middleware allows to parse/accept JSON data in the res.body
 
-    if (!product.name || !product.price || !product.image) {
-        return res.status(400).json({ message: 'All fields are required' });
-    }
-
-    const newProduct = new Product(product)
-
-    try {
-        await newProduce.save();
-        res.status(201).json(newProduct);
-    } catch (error) {
-        console.error("Error in Create product:", error.message);
-        res.status(500).json({ success: false, message: 'Server error' });
-    }
-});
+app.use("/api/products", productRoutes); // Mounting the product routes
 
 app.listen(3000, () => {
     connectDB();
